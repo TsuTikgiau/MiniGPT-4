@@ -329,14 +329,17 @@ class MiniGPTBase(BaseModel):
         length_penalty=1,
         temperature=1,
         do_sample=False,
-        stop_words_ids=[2],
+        stop_words_ids=[],
     ):
         '''
             function for generate test use
         '''
 
-        stopping_criteria = StoppingCriteriaList([StoppingCriteriaSub(
-            stops=[torch.tensor([i]).to(self.device) for i in stop_words_ids])])
+        if stop_words_ids:
+            stopping_criteria = StoppingCriteriaList([StoppingCriteriaSub(
+                stops=[torch.tensor([i]).to(self.device) for i in stop_words_ids])])
+        else:
+            stopping_criteria = None
 
         img_embeds, atts_img = self.encode_img(images.to(self.device))
         image_lists = [[image_emb[None]] for image_emb in img_embeds]

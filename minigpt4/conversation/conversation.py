@@ -101,7 +101,7 @@ class StoppingCriteriaSub(StoppingCriteria):
 
     def __call__(self, input_ids: torch.LongTensor, scores: torch.FloatTensor):
         for stop in self.stops:
-            if torch.all((stop == input_ids[0][-len(stop):])).item():
+            if torch.all(input_ids[:, -len(stop):] == stop).item():
                 return True
 
         return False
@@ -145,8 +145,7 @@ class Chat:
         if stopping_criteria is not None:
             self.stopping_criteria = stopping_criteria
         else:
-            stop_words_ids = [torch.tensor([2]).to(self.device)]
-            self.stopping_criteria = StoppingCriteriaList([StoppingCriteriaSub(stops=stop_words_ids)])
+            self.stopping_criteria = None
 
     def ask(self, text, conv):
         if len(conv.messages) > 0 and conv.messages[-1][0] == conv.roles[0] \
