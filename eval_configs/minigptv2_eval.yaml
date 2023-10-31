@@ -5,7 +5,9 @@ model:
   end_sym: "</s>"
   low_resource: True
   prompt_template: '[INST] {} [/INST]'
-  ckpt: 'please set this value to the path of pretrained checkpoint'
+#  ckpt: '/home/zhud/c2090/minigpt4_ckpt/448_conversation_correct_best_v7_ablation1_v5_v6/20231007035/checkpoint_35.pth'
+  ckpt: '/ibex/project/c2133/minigpt_checkpoints/checkpoint_stage3_correct/checkpoint_10.pth'
+  llama_model: "/ibex/project/c2133/llama_v2/llama-2-7b-chat-pytorch_update"
   lora_r: 64
   lora_alpha: 16
 
